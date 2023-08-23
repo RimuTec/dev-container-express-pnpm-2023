@@ -25,7 +25,22 @@ RUN apt-get install -y \
 
 ################################################################################
 # Install pnpm
-RUN npm install -g pnpm@8.6.12
+RUN curl -L -o /usr/local/bin/pnpm https://github.com/pnpm/pnpm/releases/download/v8.6.12/pnpm-linux-x64
+ENV PNPM_HOME=/usr/local/bin/
+RUN chmod +x /usr/local/bin/pnpm
 # Last version check on 02 Aug 2023.
 # Newer versions might be available at https://www.npmjs.com/search?q=yarn
 # [Manfred]
+
+# The following is an example of how to install a package globally using PNPM specific commands:
+#
+# RUN pnpm add -g cdktf-cli@0.18.0
+#
+# If you uncomment the preceding line, you will be able to use the cdktf-cli command within
+# the dev container, e.g. 'cdktf --version' will work in the dev container, even if you are
+# a non-root user (strongly recommended).
+#
+# Remember not to use 'pnpm install' for global packages, as it will try to install
+# the package in the current directory, which is not what you want. Also, it is likely
+# to fail unless there is a package.json file in the current directory.
+
